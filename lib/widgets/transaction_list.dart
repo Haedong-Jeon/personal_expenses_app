@@ -22,10 +22,13 @@ class TransactionListState extends State<TransactionList> {
                   'No Transactions added yet!',
                   style: Theme.of(context).textTheme.title,
                 ),
+                SizedBox(
+                  height: 200,
+                ),
                 Container(
                   height: 200,
                   child: Image.asset(
-                    'Assets/Images/waiting.png',
+                    'assets/images/waiting.png',
                     fit: BoxFit.cover,
                   ),
                 ),
