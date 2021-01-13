@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ class TransactionList extends StatefulWidget {
 class TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return widget.transactions.isEmpty
         ? LayoutBuilder(builder: (context, constraints) {
             return Column(
@@ -59,12 +61,21 @@ class TransactionListState extends State<TransactionList> {
                   subtitle: Text(
                     DateFormat.yMMMd().format(widget.transactions[index].date),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
-                    onPressed: () => widget
-                        .deleteTransactions(widget.transactions[index].id),
-                  ),
+                  trailing: mediaQuery.size.width > 450
+                      ? FlatButton.icon(
+                          icon: Icon(Icons.delete),
+                          label: Text('delete'),
+                          textColor: Theme.of(context).errorColor,
+                          onPressed: () => widget.deleteTransactions(
+                            widget.transactions[index].id,
+                          ),
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => widget.deleteTransactions(
+                              widget.transactions[index].id),
+                        ),
                 ),
               );
             },
