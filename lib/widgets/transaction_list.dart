@@ -37,6 +37,39 @@ class TransactionListState extends State<TransactionList> {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: FittedBox(
+                          child: Text('\$${widget.transactions[index].amount}'),
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      widget.transactions[index].title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd()
+                          .format(widget.transactions[index].date),
+                    ),
+                  ),
+                );
+              },
+              itemCount: widget.transactions.length,
+            ),
+    );
+  }
+}
+
+/*
+return Card(
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -82,9 +115,4 @@ class TransactionListState extends State<TransactionList> {
                     ],
                   ),
                 );
-              },
-              itemCount: widget.transactions.length,
-            ),
-    );
-  }
-}
+*/
