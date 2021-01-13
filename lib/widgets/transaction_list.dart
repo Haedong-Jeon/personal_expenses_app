@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Transaction> transactions;
-  TransactionList(this.transactions);
+  final Function deleteTransactions;
+  TransactionList(this.transactions, this.deleteTransactions);
 
   @override
   TransactionListState createState() => TransactionListState();
@@ -58,6 +59,12 @@ class TransactionListState extends State<TransactionList> {
                     subtitle: Text(
                       DateFormat.yMMMd()
                           .format(widget.transactions[index].date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => widget
+                          .deleteTransactions(widget.transactions[index].id),
                     ),
                   ),
                 );

@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'openSans',
                   fontSize: 20,
                 ),
+                button: TextStyle(color: Colors.white),
               ),
         ),
       ),
@@ -48,11 +49,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _addNewTransaction(String title, double amount) {
+    void _addNewTransaction(String title, double amount, DateTime chosenDate) {
       final newTx = Transaction(
         title: title,
         amount: amount,
-        date: DateTime.now(),
+        date: chosenDate,
         id: DateTime.now().toString(),
       );
       setState(() {
@@ -73,6 +74,12 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    void _deleteTransaction(String id) {
+      setState(() {
+        _userTransactions.removeWhere((transaction) => transaction.id == id);
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('personal expenses'),
@@ -89,7 +96,7 @@ class _HomePageState extends State<HomePage> {
             Chart(
               recentTransactions: _recentTransactions,
             ),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
