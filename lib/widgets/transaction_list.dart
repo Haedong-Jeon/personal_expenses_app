@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import './transaction_item.dart';
 import '../models/transaction.dart';
-import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Transaction> transactions;
@@ -39,44 +38,10 @@ class TransactionListState extends State<TransactionList> {
           })
         : ListView.builder(
             itemBuilder: (context, index) {
-              return Card(
-                margin: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 5,
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: FittedBox(
-                        child: Text('\$${widget.transactions[index].amount}'),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    widget.transactions[index].title,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(widget.transactions[index].date),
-                  ),
-                  trailing: mediaQuery.size.width > 450
-                      ? FlatButton.icon(
-                          icon: Icon(Icons.delete),
-                          label: Text('delete'),
-                          textColor: Theme.of(context).errorColor,
-                          onPressed: () => widget.deleteTransactions(
-                            widget.transactions[index].id,
-                          ),
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () => widget.deleteTransactions(
-                              widget.transactions[index].id),
-                        ),
-                ),
+              return TransactionItem(
+                transaction: widget.transactions[index],
+                mediaQuery: mediaQuery,
+                deleteTx: widget.deleteTransactions,
               );
             },
             itemCount: widget.transactions.length,
